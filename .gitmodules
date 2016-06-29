@@ -1,3 +1,4 @@
 [submodule "mozilla"]
 	path = mozilla
 	url = https://github.com/MoonchildProductions/Tycho
+	ignore = dirty
