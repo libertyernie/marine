@@ -27,7 +27,7 @@ DEFAULTS = {
     # URL of the default hg repository to clone for DOM Inspector.
     'INSPECTOR_REPO': 'https://hg.mozilla.org/dom-inspector/',
     # The stable revision to use
-      'INSPECTOR_REV':  'DOMI_LATEST_RELEASE',
+    'INSPECTOR_REV':  'SEAMONKEY_2_35_RELEASE',
 
     # URL of the default hg repository to clone for Mozilla.
     'MOZILLA_REPO': 'https://hg.mozilla.org/releases/mozilla-esr38/',
@@ -440,26 +440,26 @@ def do_apply_patches(topsrcdir, hg):
 o = OptionParser(usage="%prog [options] checkout")
 o.add_option("-m", "--comm-repo", dest="comm_repo",
              default=None,
-             help="URL of comm (Calendar/Mail/Suite) repository to pull from (default: use hg default in .hg/hgrc)")
+             help="Obsolete option, supported for backwards compat.")
 o.add_option("--skip-comm", dest="skip_comm",
              action="store_true", default=False,
-             help="Skip pulling the comm (Calendar/Mail/Suite) repository.")
+             help="SObsolete option, supported for backwards compat.")
 o.add_option("--comm-rev", dest="comm_rev",
              default=None,
-             help="Revision of comm (Calendar/Mail/Suite) repository to update to. If not present, COMM_REV from the environment will be used. If that doesn't exist the default is: \"" + get_DEFAULT_tag('COMM_REV') + "\"")
+             help="Obsolete option, supported for backwards compat.")
 
 o.add_option("-z", "--mozilla-repo", dest="mozilla_repo",
              default=None,
-             help="URL of Mozilla repository to pull from (default: use hg default in mozilla/.hg/hgrc; or if that file doesn't exist, use \"" + DEFAULTS['MOZILLA_REPO'] + "\".)")
+             help="Obsolete option, supported for backwards compat.")
 o.add_option("--skip-mozilla", dest="skip_mozilla",
              action="store_true", default=False,
-             help="Skip pulling the Mozilla repository.")
+             help="Obsolete option, supported for backwards compat.")
 o.add_option("--mozilla-rev", dest="mozilla_rev",
              default=None,
-             help="Revision of Mozilla repository to update to. If not present, MOZILLA_REV from the environment will be used. If that doesn't exist the default is: \"" + get_DEFAULT_tag('MOZILLA_REV') + "\"")
+             help="RObsolete option, supported for backwards compat.")
 o.add_option("--known-good", dest="known_good",
              action="store_true", default=False,
-             help="Use the last known-good Mozilla repository revision.")
+             help="Obsolete option, supported for backwards compat.")
 
 o.add_option("--inspector-repo", dest="inspector_repo",
              default=None,
@@ -682,19 +682,19 @@ if action in ('checkout', 'co'):
     # Update Comm repository configuration.
     repo_config()
 
-    if not options.skip_comm:
-        fixup_comm_repo_options(options)
-        do_hg_pull('.', options.comm_repo, options.hg, options.comm_rev)
+    #if not options.skip_comm:
+    #    fixup_comm_repo_options(options)
+    #    do_hg_pull('.', options.comm_repo, options.hg, options.comm_rev)
 
-    if not options.skip_mozilla:
-        if options.known_good and options.mozilla_rev is None:
-            print "Fetching last known good mozilla revision"
-            options.mozilla_rev = get_last_known_good_mozilla_rev()
-            print "Setting mozilla_rev to '%s'" % options.mozilla_rev
-
-        fixup_mozilla_repo_options(options)
-        do_hg_pull('mozilla', options.mozilla_repo, options.hg,
-                   options.mozilla_rev, options.hgtool, options.hgtool1)
+    #if not options.skip_mozilla:
+    #    if options.known_good and options.mozilla_rev is None:
+    #        print "Fetching last known good mozilla revision"
+    #        options.mozilla_rev = get_last_known_good_mozilla_rev()
+    #        print "Setting mozilla_rev to '%s'" % options.mozilla_rev
+    #
+    #    fixup_mozilla_repo_options(options)
+    #    do_hg_pull('mozilla', options.mozilla_repo, options.hg,
+    #               options.mozilla_rev, options.hgtool, options.hgtool1)
 
     # Check whether destination directory exists for these extensions.
     if (not options.skip_chatzilla or not options.skip_inspector) and \
