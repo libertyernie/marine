@@ -5,7 +5,7 @@
 
 # Statically link against the CRT, so that we don't go hunting around for it
 # and not find it when we're loaded into explorer.exe or similar
-GeckoSharedLibrary('mozMapi32', msvcrt='static', linkage=None)
+GoannaSharedLibrary('mozMapi32', msvcrt='static', linkage=None)
 
 SOURCES += [
     'MapiDll.cpp',

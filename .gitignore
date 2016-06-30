@@ -24,12 +24,16 @@ ID
 /.clang_complete
 /mach.ini
 
+/.treestate
+
 # Build directories
 /obj*/
 /build-*/
 
 # directories we check out from other repositories
 /mozilla
+
+/ldap
 
 # Ignore the files and directory that Eclipse IDE creates
 .project
