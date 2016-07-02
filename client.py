@@ -345,44 +345,28 @@ def do_hg_pull(dir, repository, hg, rev, hgtool=None, hgtool1=None):
         # We need to strip the trailing slash from the repository url so that
         # the hg tool gets a url that's consistent with the rest of the build
         # automation.
-        repo = repository.rstrip('/')
-
-        # Make sure to unset the PROPERTIES_FILE variable, otherwise hgtool
-        # might use this for the revisions and branches.
-        hgtoolenv = os.environ.copy()
-        if 'PROPERTIES_FILE' in hgtoolenv:
-            del hgtoolenv['PROPERTIES_FILE']
-
-        # Set up the tool options, most importantly the revision
-        hgtoolopts = ['-r', rev]
-        if options.verbose:
-            hgtoolopts.append('-v')
-
         check_call_noisy(['python'] + hgtoolcmd +
-                         hgtoolopts +
-                         [repo, fulldir],
-                         env=hgtoolenv,
+                         [repository.rstrip('/'), fulldir],
+                         retryMax=options.retries)
+    elif not os.path.exists(fulldir):
+        fulldir = os.path.join(topsrcdir, dir)
+        check_call_noisy([hg, 'clone'] + hgcloneopts + hgopts +
+                         [repository, fulldir],
                          retryMax=options.retries)
     else:
-        if not os.path.exists(fulldir):
-            fulldir = os.path.join(topsrcdir, dir)
-            check_call_noisy([hg, 'clone'] + hgcloneopts + hgopts +
-                             [repository, fulldir],
-                             retryMax=options.retries)
-        else:
-            cmd = [hg, 'pull', '-R', fulldir] + hgopts
-            if repository is not None:
-                cmd.append(repository)
-            check_call_noisy(cmd, retryMax=options.retries)
+        cmd = [hg, 'pull', '-R', fulldir] + hgopts
+        if repository is not None:
+            cmd.append(repository)
+        check_call_noisy(cmd, retryMax=options.retries)
 
-        # update to specific revision
-        cmd = [hg, 'update', '-r', rev, '-R', fulldir] + hgopts
-        if options.verbose:
-            cmd.append('-v')
-        # Explicitly never retry 'hg update': otherwise any merge failures are
-        # ignored.
-        # This command is local: a failure can't be caused by a network error.
-        check_call_noisy(cmd, retryMax=0)
+    # update to specific revision
+    cmd = [hg, 'update', '-r', rev, '-R', fulldir] + hgopts
+    if options.verbose:
+        cmd.append('-v')
+    # Explicitly never retry 'hg update': otherwise any merge failures are
+    # ignored.
+    # This command is local: a failure can't be caused by a network error.
+    check_call_noisy(cmd, retryMax=0)
 
     check_call([hg, 'parent', '-R', fulldir,
                 '--template=Updated to revision {node}.\n'])
@@ -547,20 +531,15 @@ def fixup_comm_repo_options(options):
         print "Error: the -m option is required for the initial checkout!"
         sys.exit(2)
 
-    # If COMM_REV is passed via environment, prefer that over the passed
-    # option so that automation can pass tagged versions while still defaulting
-    # to a certain revision via client.py-args.
-    envRev = os.environ.get("COMM_REV")
-    if envRev:
-        if options.comm_rev and options.comm_rev != envRev:
-            print "Warning: Preferring COMM_REV (%s) over passed revision (%s)" % (envRev, options.comm_rev)
-        else:
-            print "Using COMM_REV from environment (%s)" % envRev
-        options.comm_rev = envRev
-
-    # If no version was set before, use the default comm revision.
     if options.comm_rev is None:
-        options.comm_rev = get_DEFAULT_tag("COMM_REV")
+        # If we weren't passed an explicit rev, try to find it from the
+        # environment. If that doesn't exist or is empty, grab the default.
+        envRev = os.environ.get("COMM_REV")
+        if envRev:
+            print "Using COMM_REV from environment (%s)" % envRev
+            options.comm_rev = envRev
+        else:
+            options.comm_rev = get_DEFAULT_tag("COMM_REV")
 
 
 def fixup_mozilla_repo_options(options):
@@ -584,20 +563,15 @@ def fixup_mozilla_repo_options(options):
 
             options.mozilla_repo = config.get('paths', 'default')
 
-    # If MOZILLA_REV is passed via environment, prefer that over the passed
-    # option so that automation can pass tagged versions while still defaulting
-    # to a certain revision via client.py-args.
-    envRev = os.environ.get("MOZILLA_REV")
-    if envRev:
-        if options.mozilla_rev and options.mozilla_rev != envRev:
-            print "Warning: Preferring MOZILLA_REV (%s) over passed revision (%s)" % (envRev, options.mozilla_rev)
-        else:
-            print "Using MOZILLA_REV from environment (%s)" % envRev
-        options.mozilla_rev = envRev
-
-    # If no version was set before, use the default mozilla revision.
     if options.mozilla_rev is None:
-        options.mozilla_rev = get_DEFAULT_tag("MOZILLA_REV")
+        # If we weren't passed an explicit rev, try to find it from the
+        # environment. If that doesn't exist or is empty, grab the default.
+        envRev = os.environ.get("MOZILLA_REV")
+        if envRev:
+            print "Using MOZILLA_REV from environment (%s)" % envRev
+            options.mozilla_rev = envRev
+        else:
+            options.mozilla_rev = get_DEFAULT_tag("MOZILLA_REV")
 
 
 def fixup_chatzilla_repo_options(options):

@@ -10,6 +10,8 @@ Components.utils.import("resource://gre/modules/Preferences.jsm");
 /**
 * Initializes extraction
 *
+* @param baseUrl         path for the properties file containing patterns,
+*                            locale in path should be substituted with LOCALE
 * @param fallbackLocale  locale to use when others are not found or
 *                            detection is disabled
 * @param dayStart        ambiguous hours earlier than this are considered to
@@ -17,11 +19,8 @@ Components.utils.import("resource://gre/modules/Preferences.jsm");
 *                            set to 6
 * @param fixedLang       whether to use only fallbackLocale for extraction
 */
-function Extractor(fallbackLocale, dayStart, fixedLang) {
-    // url for multi locale AMO build
-    this.bundleUrl = "resource://calendar/chrome/calendar-LOCALE/locale/LOCALE/calendar/calendar-extract.properties";
-    // url for single locale python packaged build
-    this.packagedUrl = "jar:resource://calendar/chrome.jar!/calendar-LOCALE/locale/LOCALE/calendar/calendar-extract.properties";
+function Extractor(baseUrl, fallbackLocale, dayStart, fixedLang) {
+    this.bundleUrl = baseUrl;
     this.fallbackLocale = fallbackLocale;
     this.email = "";
     this.marker = "--MARK--";
@@ -45,11 +44,6 @@ function Extractor(fallbackLocale, dayStart, fixedLang) {
 
     if (fixedLang != null) {
         this.fixedLang = fixedLang;
-    }
-
-    if (!this.checkBundle(fallbackLocale)) {
-        this.bundleUrl = this.packagedUrl;
-        cal.WARN("Your installed Lightning only includes a single locale, extracting event info from other languages is likely inaccurate. You can install Lightning from addons.mozilla.org manually for multiple locale support.")
     }
 }
 

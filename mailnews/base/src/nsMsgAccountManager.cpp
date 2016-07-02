@@ -467,10 +467,7 @@ nsMsgAccountManager::CreateIncomingServer(const nsACString&  username,
 
     // From when we first create the account until we have created some folders,
     // we can change the store type.
-    //(*_retval)->SetBoolValue("canChangeStoreType", true);
-    //
-    // This is disabled because of maildir issues in Thunderbird 38
-    (*_retval)->SetBoolValue("canChangeStoreType", false);
+    (*_retval)->SetBoolValue("canChangeStoreType", true);
   }
   return rv;
 }

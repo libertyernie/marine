@@ -335,8 +335,7 @@ function test_display_name_no_abook()
   collapse_all_threads();
   select_click_row(thread1);
 
-  // No address book entry, we display name and e-mail address.
-  check_address_name(address.name + " <" + address.email + ">");
+  check_address_name(address.name);
 }
 
 function test_display_name_abook()
@@ -362,7 +361,5 @@ function test_display_name_abook_no_pdn()
   collapse_all_threads();
   select_click_row(thread1);
 
-  // With address book entry but display name not preferred, we display name and
-  // e-mail address.
-  check_address_name(address.name + " <" + address.email + ">");
+  check_address_name(address.name);
 }

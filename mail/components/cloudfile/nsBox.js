@@ -17,8 +17,6 @@ Cu.import("resource:///modules/cloudFileAccounts.js");
 Cu.import("resource:///modules/OAuth2.jsm");
 Cu.import("resource://gre/modules/Http.jsm");
 
-Cu.importGlobalProperties(["File"]);
-
 var gServerUrl = "https://api.box.com/2.0/";
 var gUploadUrl = "https://upload.box.com/api/2.0/";
 
@@ -117,28 +115,26 @@ nsBox.prototype = {
 
   /**
    * Private function for assigning the folder id from a cached version
-   * If the folder doesn't exist, check if it exists on the server. If it
-   * doesn't, set in motion the creation.
+   * If the folder doesn't exist, set in motion the creation
    *
    * @param aCallback called if folder is ready.
    */
   _initFolder: function nsBox__initFolder(aCallback) {
     this.log.info('_initFolder, cached folder id  = ' + this._cachedFolderId);
 
-    let saveFolderId = (aFolderId) => {
+    let saveFolderId = function(aFolderId) {
       this.log.info('saveFolderId : ' + aFolderId);
       this._cachedFolderId = this._folderId = aFolderId;
       if (aCallback)
         aCallback();
-    };
+    }.bind(this);
 
-    let createThunderbirdFolder = () => {
+    let createThunderbirdFolder = function() {
       this._createFolder("Thunderbird", saveFolderId);
-    };
+    }.bind(this);
 
-    // If there's no cached folder, try to get one, otherwise create one.
     if (this._cachedFolderId == "")
-      this._getFolder("Thunderbird", saveFolderId, createThunderbirdFolder);
+      createThunderbirdFolder();
     else {
       this._folderId = this._cachedFolderId;
       if (aCallback)
@@ -418,78 +414,6 @@ nsBox.prototype = {
   },
 
   /**
-   * Private function to get the ID of an already existing folder on the Box
-   * website.
-   *
-   * @param aName name of folder
-   * @param aSuccessCallback called if the folder exists
-   * @param aFailureCallback called if the folder cannot be found
-   */
-  _getFolder: function nsBox__getFolder(aName,
-                                        aSuccessCallback,
-                                        aFailureCallback) {
-    this.log.info("Getting folder: " + aName);
-    if (Services.io.offline)
-      throw Ci.nsIMsgCloudFileProvider.offlineErr;
-
-    // There's no API to search by name and we don't know the ID. Get the root
-    // folder and search for this name inside of it.
-    const ROOT_ID = "0";
-    let requestUrl = gServerUrl + "folders/" + ROOT_ID;
-    this.log.info("get_folder requestUrl = " + requestUrl);
-
-    let getSuccess = (aResponseText, aRequest) => {
-      this.log.info("get_folder request response = " + aResponseText);
-
-      let folderId = null;
-      try {
-        let result = JSON.parse(aResponseText);
-
-        // Ensure the JSON is somewhat valid.
-        if (!result || !result.item_collection) {
-          this._lastErrorText = "Get folder failure";
-          this._lastErrorStatus = docStatus;
-          return;
-        }
-
-        // Search the paths for the folder.
-        for (let item of result.item_collection.entries) {
-          // Found it!
-          if (item.type == "folder" && item.name == aName) {
-            folderId = item.id;
-            break;
-          }
-        }
-      }
-      catch(e) {
-        // most likely bad JSON
-        this.log.error("Failed to get the folder:\n" + e);
-      }
-
-      // Return outside of the try-catch.
-      if (folderId) {
-        this.log.info("folder id = " + folderId);
-        aSuccessCallback(folderId)
-      }
-      else {
-        // Didn't find any item.
-        aFailureCallback();
-      }
-    };
-    let getFailure = (aException, aResponseText, aRequest) => {
-      this.log.error("Failed to get an existing folder: " + aRequest.status);
-    };
-
-    // Request to create the folder
-    httpRequest(requestUrl, {
-                  onLoad: getSuccess,
-                  onError: getFailure,
-                  method: "GET",
-                  headers: [["Authorization", "Bearer " + this._oauth.accessToken]]
-                });
-  },
-
-  /**
    * Private function for creating folder on the Box website.
    *
    * @param aName name of folder
@@ -553,14 +477,14 @@ nsBox.prototype = {
    */
   createExistingAccount: function nsBox_createExistingAccount(aRequestObserver) {
      // XXX: replace this with a better function
-    let successCb = () => {
+    let successCb = function(aResponseText, aRequest) {
       aRequestObserver.onStopRequest(null, this, Cr.NS_OK);
-    };
+    }.bind(this);
 
-    let failureCb = (aResponseText) => {
+    let failureCb = function(aResponseText, aRequest) {
       aRequestObserver.onStopRequest(null, this,
                                      Ci.nsIMsgCloudFileProvider.authErr);
-    };
+    }.bind(this);
 
     this.logon(successCb, failureCb, true);
   },

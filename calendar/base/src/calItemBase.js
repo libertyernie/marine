@@ -556,38 +556,10 @@ calItemBase.prototype = {
 
     // void addAttendee(in calIAttendee attendee);
     addAttendee: function cIB_addAttendee(attendee) {
-        // the duplicate check is migration code for bug 1204255
-        let exists = this.getAttendeeById(attendee.id);
-        if (exists) {
-            cal.LOG("Ignoring attendee duplicate for item " + this.id +
-                    " (" + this.title + "): " + exists.id);
-            if (exists.participationStatus == "NEEDS-ACTION" ||
-                attendee.participationStatus == "DECLINED") {
-                this.removeAttendee(exists);
-            } else {
-                attendee = null;
-            }
-        }
-        if (attendee) {
-            if (attendee.commonName) {
-                // migration code for bug 1209399 to remove leading/training double quotes in
-                let cn = attendee.commonName.replace(/^["]*([^"]*)["]*$/, "$1");
-                if (cn.length == 0) {
-                    cn = null;
-                }
-                if (cn != attendee.commonName) {
-                    if (attendee.isMutable) {
-                        attendee.commonName = cn;
-                    } else {
-                        cal.LOG("Failed to cleanup malformed commonName for immutable attendee " +
-                                attendee.toString() + "\n" + cal.STACK(20));
-                    }
-                }
-            }
-            this.modify();
-            this.mAttendees = this.getAttendees({});
-            this.mAttendees.push(attendee);
-        }
+        this.modify();
+        this.mAttendees = this.getAttendees({});
+        this.mAttendees.push(attendee);
+        // XXX ensure that the attendee isn't already there?
     },
 
     // void getAttachments(out PRUint32 count,

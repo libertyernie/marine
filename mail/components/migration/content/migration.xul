@@ -36,20 +36,17 @@
 
 #ifdef XP_WIN
       <radio id="oexpress"  label="&importFromOExpress.label;"  accesskey="&importFromOExpress.accesskey;"/>
-      <radio id="outlook"   label="&importFromOutlook.label;"   accesskey="&importFromOutlook.accesskey;"
-                            tooltiptext="Currently disabled due to bug 1175055" disabled="true"/>
+      <radio id="outlook"   label="&importFromOutlook.label;"   accesskey="&importFromOutlook.accesskey;"/>
 #endif
 
 #ifdef XP_UNIX
 #ifdef XP_MACOSX
-      <radio id="eudora"    label="&importFromEudora.label;"    accesskey="&importFromEudora.accesskey;"
-                            tooltiptext="Currently disabled due to bug 1175055" disabled="true"/>
+      <radio id="eudora"    label="&importFromEudora.label;"    accesskey="&importFromEudora.accesskey;"/>
 #endif
 #endif
 
 #ifdef XP_WIN
-      <radio id="eudora"    label="&importFromEudora.label;"    accesskey="&importFromEudora.accesskey;"
-                            tooltiptext="Currently disabled due to bug 1175055" disabled="true"/>
+      <radio id="eudora"    label="&importFromEudora.label;"    accesskey="&importFromEudora.accesskey;"/>
 #endif
 
       <radio id="nothing"   label="&importFromNothing.label;"   accesskey="&importFromNothing.accesskey;" hidden="true"/>

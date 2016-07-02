@@ -212,8 +212,7 @@
   }
 }
 
-@media (-moz-windows-default-theme) and (-moz-os-version: windows-win8),
-       (-moz-windows-default-theme) and (-moz-os-version: windows-win10) {
+@media (-moz-windows-default-theme) and (-moz-os-version: windows-win8) {
   .statusMessageToolbarItem {
     border-radius: 0;
   }

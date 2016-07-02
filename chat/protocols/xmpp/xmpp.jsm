@@ -694,7 +694,7 @@ const XMPPAccountPrototype = {
     }
 
     // Store the prplIChatRoomFieldValues to enable later reconnections.
-    muc.chatRoomFields = aComponents;
+    muc._chatRoomFields = aComponents;
     muc.joining = true;
 
     let x;

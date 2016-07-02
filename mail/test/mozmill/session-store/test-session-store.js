@@ -88,10 +88,6 @@ function setupModule(module) {
   sessionStoreManager._sessionAutoSaveTimerIntervalMS = 100;
 
   sessionStoreManager.stopPeriodicSave();
-
-  // Opt out of calendar promotion so we don't show the "ligthing now
-  // integrated" notification bar (which gives us unexpected heights).
-  Services.prefs.setBoolPref("calendar.integration.notify", false);
 }
 
 function teardownTest(test) {
@@ -105,7 +101,6 @@ function teardownModule(module) {
                               sessionStoreManager.SESSION_AUTO_SAVE_DEFAULT_MS;
   folderA.Delete();
   folderB.Delete();
-  Services.prefs.clearUserPref("calendar.integration.notify");
 }
 
 function test_periodic_session_persistence_simple() {

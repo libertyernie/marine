@@ -60,9 +60,7 @@ function _getIdentityForAddress(aEmailAddress) {
  * returns |null|.
  *
  * @param aEmailAddress      The email address to format.
- * @param aHeaderDisplayName The display name from the header, if any
- *                           (unused, maintained for add-ons, previously used
- *                           as a fallback).
+ * @param aHeaderDisplayName The display name from the header, if any.
  * @param aContext           The field being formatted (e.g. "to", "from").
  * @param aCard              The address book card, if any.
  * @return The formatted display name, or null.
@@ -93,12 +91,12 @@ function FormatDisplayName(aEmailAddress, aHeaderDisplayName, aContext, aCard)
   // this are then responsible for falling back to something else (e.g. the
   // value from the message header).
   if (card) {
-    // getProperty may return a "1" or "0" string, we want a boolean
-    if (card.getProperty("PreferDisplayName", true) != false)
-      displayName = card.displayName || null;
+    if (!displayName && aHeaderDisplayName)
+      displayName = aHeaderDisplayName;
 
-    // Note: aHeaderDisplayName is not used as a fallback as confusion could be
-    // caused by a collected address using an e-mail address as display name.
+    // getProperty may return a "1" or "0" string, we want a boolean
+    if (!displayName || card.getProperty("PreferDisplayName", true) != false)
+      displayName = card.displayName || null;
   }
 
   return displayName;
@@ -116,18 +114,11 @@ function FormatDisplayName(aEmailAddress, aHeaderDisplayName, aContext, aCard)
 function FormatDisplayNameList(aHeaderValue, aContext) {
   let addresses = MailServices.headerParser.parseDecodedHeader(aHeaderValue);
   if (addresses.length > 0) {
-    let displayName = FormatDisplayName(addresses[0].email, addresses[0].name, aContext);
-    if (displayName)
-      return displayName;
-
-    // Construct default display.
-    if (addresses[0].email) {
-      return addresses[0].name ?
-             addresses[0].name + " <" + addresses[0].email + ">" :
-             addresses[0].email;
-    }
+    return FormatDisplayName(addresses[0].email, addresses[0].name, aContext) ||
+      addresses[0].name || addresses[0].email;
   }
-
-  // Something strange happened, just return the raw header value.
-  return aHeaderValue;
+  else {
+    // Something strange happened, just return the raw header value.
+    return aHeaderValue;
+  }
 }

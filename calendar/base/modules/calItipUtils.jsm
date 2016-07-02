@@ -364,19 +364,22 @@ cal.itip = {
             }
         }
 
+        let hdrParser = MailServices.headerParser;
+        let emails = {};
+
         // First check the recipient list
-        let toList = MailServices.headerParser.makeFromDisplayAddress(aMsgHdr.recipients);
-        for (let recipient of toList) {
-            if (recipient.email.toLowerCase() in emailMap) {
+        hdrParser.parseHeadersWithArray(aMsgHdr.recipients, emails, {}, {});
+        for each (let recipient in emails.value) {
+            if (recipient.toLowerCase() in emailMap) {
                 // Return the first found recipient
                 return recipient;
             }
         }
 
         // Maybe we are in the CC list?
-        let ccList = MailServices.headerParser.makeFromDisplayAddress(aMsgHdr.ccList);
-        for (let recipient of ccList) {
-            if (recipient.email.toLowerCase() in emailMap) {
+        hdrParser.parseHeadersWithArray(aMsgHdr.ccList, emails, {}, {});
+        for each (let recipient in emails.value) {
+            if (recipient.toLowerCase() in emailMap) {
                 // Return the first found recipient
                 return recipient;
             }

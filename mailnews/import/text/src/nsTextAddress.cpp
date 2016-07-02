@@ -11,7 +11,6 @@
 #include "nsIInputStream.h"
 #include "nsILineInputStream.h"
 #include "nsNetUtil.h"
-#include "nsMsgI18N.h"
 #include "nsMsgUtils.h"
 #include "mdb.h"
 #include "nsIConverterInputStream.h"
@@ -52,7 +51,8 @@ nsresult nsTextAddress::GetUnicharLineStreamForFile(nsIFile *aFile,
   nsAutoCString charset;
   nsresult rv = MsgDetectCharsetFromFile(aFile, charset);
   if (NS_FAILED(rv)) {
-    charset.Assign(nsMsgI18NFileSystemCharset());
+    IMPORT_LOG0( "*** Error checking address file for charset detection\n");
+    return rv;
   }
 
   nsCOMPtr<nsIConverterInputStream> converterStream =

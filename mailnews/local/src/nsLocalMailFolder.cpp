@@ -1218,11 +1218,15 @@ nsMsgLocalMailFolder::DeleteMessages(nsIArray *messages,
         if (NS_SUCCEEDED(rv))
         {
           rv = msgStore->DeleteMessages(messages);
+          GetDatabase();
           nsCOMPtr<nsIMsgDBHdr> msgDBHdr;
-          for (uint32_t i = 0; i < messageCount; ++i)
+          if (mDatabase)
           {
-            msgDBHdr = do_QueryElementAt(messages, i, &rv);
-            rv = msgDB->DeleteHeader(msgDBHdr, nullptr, false, true);
+        for (uint32_t i = 0; i < messageCount; ++i)
+        {
+              msgDBHdr = do_QueryElementAt(messages, i, &rv);
+              rv = mDatabase->DeleteHeader(msgDBHdr, nullptr, false, true);
+            }
           }
         }
       }
@@ -1237,15 +1241,6 @@ nsMsgLocalMailFolder::DeleteMessages(nsIArray *messages,
         NotifyFolderEvent(NS_SUCCEEDED(rv) ? mDeleteOrMoveMsgCompletedAtom : mDeleteOrMoveMsgFailedAtom);
       if (msgWindow && !isMove)
         AutoCompact(msgWindow);
-    }
-  }
-
-  if (msgWindow && !isMove && (deleteStorage || isTrashFolder)) {
-    // Clear undo and redo stack.
-    nsCOMPtr<nsITransactionManager> txnMgr;
-    msgWindow->GetTransactionManager(getter_AddRefs(txnMgr));
-    if (txnMgr) {
-      txnMgr->Clear();
     }
   }
   return rv;

@@ -213,8 +213,7 @@ function delayedOnLoadAddressBook()
 
   // Focus the searchbox as we think the user will want to do that
   // with the highest probability.
-  // Bug 1143812: This is disabled for now to keep the New Contact command enabled.
-  // QuickSearchFocus();
+  QuickSearchFocus();
 }
 
 

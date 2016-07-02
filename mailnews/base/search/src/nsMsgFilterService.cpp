@@ -317,7 +317,6 @@ protected:
   nsCOMPtr<nsIMsgOperationListener> m_callback;
   uint32_t                    m_nextAction; // next filter action to perform
   nsresult                    mFinalResult; // report of overall success or failure
-  bool                        mNeedsRelease; // Did we need to release ourself?
 };
 
 NS_IMPL_ISUPPORTS(nsMsgFilterAfterTheFact, nsIUrlListener, nsIMsgSearchNotify, nsIMsgCopyServiceListener)
@@ -335,7 +334,6 @@ nsMsgFilterAfterTheFact::nsMsgFilterAfterTheFact(nsIMsgWindow *aMsgWindow,
   m_folders->GetLength(&m_numFolders);
 
   NS_ADDREF(this); // we own ourselves, and will release ourselves when execution is done.
-  mNeedsRelease = true;
 
   m_searchHitHdrs = do_CreateInstance(NS_ARRAY_CONTRACTID);
   m_callback = aCallback;
@@ -359,12 +357,7 @@ nsresult nsMsgFilterAfterTheFact::OnEndExecution()
     (void)m_callback->OnStopOperation(mFinalResult);
 
   nsresult rv = mFinalResult;
-  MOZ_ASSERT(mNeedsRelease, "OnEndExecution called a second time");
-  if (mNeedsRelease)
-  {
-    Release(); // release ourselves.
-    mNeedsRelease = false;
-  }
+  Release(); // release ourselves.
   return rv;
 }
 

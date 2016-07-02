@@ -194,11 +194,8 @@ POP3Pump.prototype._testNext = function _testNext()
     // Set up the test
     this._daemon.setMessages(thisFiles);
 
-    // Now get the mail, get inbox in case it got un-deferred.
-    let inbox = this._incomingServer
-                    .rootMsgFolder
-                    .getFolderWithFlags(Ci.nsMsgFolderFlags.Inbox);
-    this._pop3Service.GetNewMail(null, this, inbox,
+    // Now get the mail
+    this._pop3Service.GetNewMail(null, this, localAccountUtils.inboxFolder,
                                  this._incomingServer);
 
     this._server.performTest();

@@ -108,8 +108,17 @@ var DirPaneController =
       case "cmd_properties":
         return (GetSelectedDirectory() != null);
       case "cmd_newlist":
+        selectedDir = GetSelectedDirectory();
+        if (selectedDir && selectedDir != (kAllDirectoryRoot + "?")) {
+          var abDir = GetDirectoryFromURI(selectedDir);
+          if (abDir) {
+            return abDir.supportsMailingLists;
+          }
+        }
+        return false;
       case "cmd_newCard":
-        return true;
+        selectedDir = GetSelectedDirectory();
+        return (selectedDir && selectedDir != (kAllDirectoryRoot + "?"));
       default:
         return false;
     }
@@ -266,6 +275,8 @@ function InitCommonJS()
   if (abList) {
     abList.insertItemAt(0, gAddressBookBundle.getString("allAddressBooks"),
                         kAllDirectoryRoot + "?");
+    // Select the newly added entry.
+    abList.selectedIndex = 0;
   }
 }
 

@@ -145,10 +145,6 @@ function processWindowArguments(aArguments) {
 
     if (firstItem)
       selectFolder(firstItem);
-
-    if (gSelectedFolder)
-      setRunFolder(gSelectedFolder);
-
   } else {
     // If we didn't change folder still redraw the list
     // to show potential new filters if we were called for refresh.
@@ -240,12 +236,10 @@ function setFolder(msgFolder)
    document.getElementById("folderPickerPrefix").hidden = !canFilterAfterTheFact;
 
    if (canFilterAfterTheFact) {
-     // Get the first folder for this server. INBOX for IMAP and POP3 accounts
-     // and 1st news group for news. Disable the button for Choose Folder, if
-     // no folder is selected and the server is not imap/pop3/nntp.
+     // Get the first folder for this server. INBOX for
+     // IMAP and POP3 accounts and 1st news group for news.
      gRunFiltersFolder.selectedIndex = 0;
      runMenu.selectFolder(getFirstFolder(gSelectedFolder || msgFolder));
-     updateButtons();
    }
 }
 
@@ -719,7 +713,7 @@ function updateButtons()
     // so only disable this UI if no filters are selected
     document.getElementById("folderPickerPrefix").disabled = !numFiltersSelected;
     gRunFiltersFolder.disabled = !numFiltersSelected;
-    gRunFiltersButton.disabled = !numFiltersSelected || !gRunFiltersFolder.value;
+    gRunFiltersButton.disabled = !numFiltersSelected;
     // "up" and "top" enabled only if one filter is selected, and it's not the first
     // don't use gFilterListbox.currentIndex here, it's buggy when we've just changed the
     // children in the list (via rebuildFilterList)
@@ -837,13 +831,8 @@ function onFilterListKeyPress(aEvent)
 }
 
 function onTargetSelect(event) {
-  setRunFolder(event.target._folder);
-}
-
-function setRunFolder(aFolder) {
-  gRunFiltersFolder._folder = aFolder;
+  gRunFiltersFolder._folder = event.target._folder;
   gRunFiltersFolder.menupopup.selectFolder(gRunFiltersFolder._folder);
-  updateButtons();
 }
 
 /**

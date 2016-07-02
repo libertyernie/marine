@@ -449,10 +449,6 @@ function Recheck()
   try {
     recheckLanguage = gSpellChecker.GetCurrentDictionary();
     gSpellChecker.UninitSpellChecker();
-    // Clear the ignore all list.
-    Components.classes["@mozilla.org/spellchecker/personaldictionary;1"]
-              .getService(Components.interfaces.mozIPersonalDictionary)
-              .endSession();
     gSpellChecker.InitSpellChecker(GetCurrentEditor(), false, finishRecheck);
   } catch(ex) {
     Components.utils.reportError(ex);

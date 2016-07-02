@@ -48,10 +48,6 @@
   min-height: 24px;
 }
 
-.findbar-button {
-  padding: 2px 6px;
-}
-
 @media not all and (-moz-windows-default-theme) {
   #messengerWindow[tabsintitlebar] #mail-menubar > menu {
     -moz-appearance: none;
@@ -60,7 +56,6 @@
 
 @media (-moz-windows-default-theme) and (-moz-os-version: windows-vista),
        (-moz-windows-default-theme) and (-moz-os-version: windows-win7) {
-  .findbar-button,
   .toolbarbutton-1:not([type="menu-button"]),
   .toolbarbutton-1 > .toolbarbutton-menubutton-button,
   .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
@@ -89,7 +84,6 @@
     border-bottom-left-radius: 0;
   }
 
-  .findbar-button:not(:-moz-any([checked="true"],[disabled="true"])):hover,
   .toolbarbutton-1:not([disabled="true"]):-moz-any(:hover,[open="true"]) >
   .toolbarbutton-menubutton-button,
   .toolbarbutton-1:not([disabled="true"]):hover >
@@ -117,7 +111,6 @@
                 0 0 2px hsla(210, 54%, 20%, .1);
   }
 
-  .findbar-button:not([disabled=true]):-moz-any([checked="true"],:hover:active),
   .toolbarbutton-1 > .toolbarbutton-menubutton-button:not([disabled="true"]):hover:active,
   .toolbarbutton-1[open="true"] > .toolbarbutton-menubutton-dropmarker:not([disabled="true"]),
   .toolbarbutton-1:not([type="menu-button"]):not([disabled="true"]):-moz-any([open="true"],[checked="true"],:hover:active) {
@@ -145,9 +138,7 @@
   }
 }
 
-@media (-moz-os-version: windows-win8),
-       (-moz-os-version: windows-win10) {
-  .findbar-button,
+@media (-moz-os-version: windows-win8) {
   .toolbarbutton-1:not([type="menu-button"]),
   .toolbarbutton-1 > .toolbarbutton-menubutton-button,
   .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
@@ -162,7 +153,6 @@
     -moz-appearance: none;
   }
 
-  .findbar-button:not(:-moz-any([checked="true"],[disabled="true"])):hover,
   .toolbarbutton-1:not([disabled=true]):-moz-any(:hover,[open]) >
   .toolbarbutton-menubutton-button,
   .toolbarbutton-1:not([disabled=true]):-moz-any(:hover,[open]) >
@@ -175,7 +165,6 @@
     border-color: hsla(210, 4%, 10%, .1);
   }
 
-  .findbar-button:not([disabled=true]):-moz-any([checked="true"],:hover:active),
   .toolbarbutton-1 >
   .toolbarbutton-menubutton-button:not([disabled=true]):hover:active,
   .toolbarbutton-1[open] >
@@ -340,6 +329,11 @@ toolbox[labelalign="end"] > toolbar[mode="full"] .toolbarbutton-1 .toolbarbutton
 }
 
 @media (-moz-windows-default-theme) and (-moz-windows-compositor) {
+  #messengerWindow {
+    -moz-appearance: -moz-win-borderless-glass;
+    background: transparent;
+  }
+
   #navigation-toolbox:not(:-moz-lwtheme),
   #tabs-toolbar {
     background-color: transparent;
@@ -458,8 +452,7 @@ toolbox[labelalign="end"] > toolbar[mode="full"] .toolbarbutton-1 .toolbarbutton
   }
 }
 
-@media (-moz-os-version: windows-win8),
-       (-moz-os-version: windows-win10) {
+@media (-moz-os-version: windows-win8) {
   @media not all and (-moz-windows-default-theme) {
     #messengerWindow:not([tabsintitlebar]) #tabs-toolbar:not(:-moz-lwtheme),
     #messengerWindow:not([tabsintitlebar]) #mail-menubar >
@@ -650,8 +643,7 @@ toolbar[iconsize="large"]:not([mode="text"]) .badgeButton-badge {
   -moz-padding-end: 0.5em;
 }
 
-@media (-moz-os-version: windows-win8),
-       (-moz-os-version: windows-win10) {
+@media (-moz-os-version: windows-win8) {
   #appmenuSecondaryPane {
     --appMenu-bg-color: -moz-dialog;
     --appMenu-bg-box-shadow: ThreeDShadow;

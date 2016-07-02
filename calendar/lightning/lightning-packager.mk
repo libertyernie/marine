@@ -34,13 +34,13 @@ _ABS_DIST := $(abspath $(DIST))
 
 # This variable is to allow the wget-en-US target to know which ftp server to download from
 ifndef EN_US_BINARY_URL
-ifdef DOWNLOAD_HOST
-# If this url is missing, and DOWNLOAD_HOST is defined its probably the release
+ifdef UPLOAD_HOST
+# If this url is missing, and UPLOAD_HOST is defined its probably the release
 # run where we can't influence the download location. Fake it from the env vars
 # we have
 BUILD_NR=$(shell echo $(POST_UPLOAD_CMD) | sed -n -e 's/.*-n \([0-9]*\).*/\1/p')
 CANDIDATE_NR=$(if $(LIGHTNING_VERSION),$(LIGHTNING_VERSION),$(XPI_VERSION))
-EN_US_BINARY_URL=http://$(DOWNLOAD_HOST)/pub/calendar/lightning/candidates/$(CANDIDATE_NR)-candidates/build$(BUILD_NR)/$(MOZ_PKG_PLATFORM)
+EN_US_BINARY_URL=http://$(UPLOAD_HOST)/pub/mozilla.org/calendar/lightning/nightly/$(CANDIDATE_NR)-candidates/build$(BUILD_NR)/$(MOZ_PKG_PLATFORM)
 else
 EN_US_BINARY_URL = $(error You must set EN_US_BINARY_URL)
 endif
@@ -67,7 +67,7 @@ SHORTOS = linux
 endif
 
 # function print_ltnconfig(section,configname)
-print_ltnconfig = $(shell $(PYTHON) $(MOZILLA_SRCDIR)/config/printconfigsetting.py $(XPI_STAGE_PATH)/$(XPI_NAME)/app.ini $1 $2)
+print_ltnconfig = $(shell $(PYTHON) $(MOZILLA_SRCDIR)/config/printconfigsetting.py $(XPI_STAGE_PATH)/$(XPI_NAME)/application.ini $1 $2)
 
 wget-en-US: FINAL_BINARY_URL = $(subst thunderbird,calendar/lightning,$(EN_US_BINARY_URL))
 wget-en-US: $(XPI_STAGE_PATH)
@@ -155,7 +155,7 @@ libs-%:
 repack-process-extrafiles:
 
 # When repackaging Lightning from the builder, platform.ini is not yet created.
-# Recreate it from the app.ini bundled with the downloaded xpi.
+# Recreate it from the application.ini bundled with the downloaded xpi.
 $(LIBXUL_DIST)/bin/platform.ini:
 	mkdir -p $(@D)
 	echo "[Build]" >> $(LIBXUL_DIST)/bin/platform.ini
