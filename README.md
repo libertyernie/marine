@@ -1,7 +1,7 @@
 marine
 ======
 
-This proof-of-concept project builds SeaMonkey 2.35 against the "Tycho" Pale Moon rebase.
+This proof-of-concept project builds SeaMonkey 2.35 against the platform used by the "Tycho" Pale Moon rebase (instead of Gecko 38.)
 
 To build on Windows:
 * Check this repository out recursively (to include Tycho)

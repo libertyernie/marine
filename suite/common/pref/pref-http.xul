@@ -24,12 +24,9 @@
       <preference id="network.http.proxy.pipelining"
                   name="network.http.proxy.pipelining"
                   type="bool"/>
-      <preference id="general.useragent.compatMode.firefox"
-                  name="general.useragent.compatMode.firefox"
-                  type="bool"/>
-      <preference id="general.useragent.compatMode.gecko"
-                  name="general.useragent.compatMode.gecko"
-                  type="bool"/>
+      <preference id="general.useragent.compatMode"
+                  name="general.useragent.compatMode"
+                  type="int"/>
     </preferences>
 
     <description>&prefPara;</description>
@@ -66,7 +63,7 @@
                    label="&prefEnableHTTP10.label;"
                    accesskey="&prefEnableHTTP10Proxy.accesskey;"/>
             <radio value="1.1"
-                   label="&prefEnableHTTP11.label;" 
+                   label="&prefEnableHTTP11.label;"
                    accesskey="&prefEnableHTTP11Proxy.accesskey;"/>
           </radiogroup>
 
@@ -84,17 +81,14 @@
 
     <separator class="thin"/>
 
-    <groupbox>
-      <caption label="&prefUseragent.label;"/>
-      <checkbox id="uaFirefoxCompat"
-                label="&prefFirefoxCompat.label;"
-                accesskey="&prefFirefoxCompat.accesskey;"
-                preference="general.useragent.compatMode.firefox"/>
-      <checkbox id="uaGeckoCompat"
-                label="&prefGeckoCompat.label;"
-                accesskey="&prefGeckoCompat.accesskey;"
-                preference="general.useragent.compatMode.gecko"/>
-    </groupbox>
+    <label id="UACompat" control="UACompat-menu">&prefUACompat.label;:</label>
+    <menulist id="UACompat-menu" preference="general.useragent.compatMode" sizetopopup="always">
+      <menupopup>
+        <menuitem label="&prefUACompat.Native;" value="0" />
+        <menuitem label="&prefUACompat.Gecko;"  value="1" />
+        <menuitem label="&prefUACompat.Firefox;" value="2" />
+      </menupopup>
+    </menulist>
   </prefpane>
 
 </overlay>

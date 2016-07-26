@@ -40,9 +40,6 @@ pref("browser.urlbar.historyEnabled",       true);
 pref("general.smoothScroll", false);
 pref("general.autoScroll", true);
 
-pref("general.useragent.compatMode.firefox", true);
-pref("general.useragent.compatMode.gecko", true);
-
 pref("general.useragent.complexOverride.moodle", false); // bug 797703; bug 815801
 
 // 0 = blank, 1 = home (browser.startup.homepage), 2 = last visited page, 3 = resume previous browser session
