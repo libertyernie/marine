@@ -9,15 +9,8 @@ and window icons (to appear in the upper left corner of various windows).
 
 
 
-Requirements:
-Each icon should contain the following devices images:
-48x48, 32x32, and 16x16 - 16 color
-48x48, 32x32, and 16x16 - True color
+Each icon contains the following devices images:
 48x48, 32x32, and 16x16 - True color XP (Contains alpha shadows)
-
-At this time, we don't think 256 color is a good idea since Windows does
-a good job dithering and some systems will use 256 color icons even when
-True Color exists.
 
 See bug http://bugzilla.mozilla.org/show_bug.cgi?id=99380 for a lot of rambling about
 icons.

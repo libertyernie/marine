@@ -1835,7 +1835,7 @@
                sodipodi:cy="433.07086"
                sodipodi:cx="365.22308"
                id="path4040"
-               style="fill:none;fill-opacity:0.36184208;fill-rule:evenodd;stroke:#26269a;stroke-width:10.80470085;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               style="fill:#154f29;fill-opacity:1.0;fill-rule:evenodd;stroke:#3d8b59;stroke-width:10.80470085;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
                sodipodi:type="arc" />
           </g>
         </g>
@@ -2098,7 +2098,7 @@
                sodipodi:nodetypes="cccccccsccccccccccc" />
             <path
                sodipodi:type="arc"
-               style="fill:none;fill-opacity:0.36184208;fill-rule:evenodd;stroke:#26269a;stroke-width:10.80470085;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               style="fill:#154f29;fill-opacity:1.0;fill-rule:evenodd;stroke:#3d8b59;stroke-width:10.80470085;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
                id="path4142"
                sodipodi:cx="365.22308"
                sodipodi:cy="433.07086"
