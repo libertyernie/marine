@@ -15,22 +15,15 @@ Do Not Edit! -->
 <DL><p>
     <DT><H3 PERSONAL_TOOLBAR_FOLDER="true" ID="NC:PersonalToolbarFolder">@personal_toolbarfolder@</H3>
     <DL><p>
+        <DT><A HREF="https://www.github.com/libertyernie/marine">Marine</a>
+        <DT><A HREF="http://www.palemoon.org/">Pale Moon</A>
         <DT><A HREF="http://www.seamonkey-project.org/">@seamonkey@</a>
         @seamonkey_l10n@
-        <DT><A HREF="http://www.mozilla.org/">@mozilla_org@</A>
-        <DT><A HREF="http://www.mozillazine.org/">@mozillazine@</A>
-        <DT><A HREF="http://www.mozdev.org/">@mozdev@</A>
     </DL><p>
-    <DT><H3>@seamonkey_and_mozilla@</H3>
+    <DT><H3>@seamonkey@</H3>
     <DL><p>
         <DT><A HREF="http://www.seamonkey-project.org/">@seamonkey_long@</a>
         @seamonkey_l10n_long@
-        <DT><H3>@mozilla_org@</H3>
-        <DL><p>
-            <DT><A HREF="http://www.mozilla.org/">@mozilla_org_long@</A>
-            <DT><A HREF="http://www.mozilla.org/projects/">@mozilla_projects@</A>
-            <DT><A HREF="http://www.mozilla.org/about/">@mozilla_about@</A>
-        </DL><p>
         <DT><H3>@extend_seamonkey@</H3>
         <DL><p>
             <DT><A HREF="https://addons.mozilla.org/@AB_CD@/seamonkey/">@seamonkey_addons@</a>
@@ -40,12 +33,11 @@ Do Not Edit! -->
             <DT><A HREF="http://www.mozdev.org/">@mozdev@</A>
             <DT><A HREF="http://www.mozdev.org/projects/applications/SeaMonkey.html">@mozdev_seamonkey@</A>
         </DL><p>
-        <DT><H3>@community_support@</H3>
-        <DL><p>
-            <DT><A HREF="http://www.seamonkey-project.org/community">@seamonkey_community@</a>
-            <DT><A HREF="http://www.mozillazine.org/">@mozillazine@</A>
-            <DT><A HREF="http://forums.mozillazine.org/viewforum.php?f=40">@seamonkey_support@</A>
-        </DL><p>
+    </DL><p>
+    <DT><H3>Pale Moon</H3>
+    <DL><p>
+        <DT><A HREF="http://www.palemoon.org/">Pale Moon</A>
+        <DT><A HREF="http://www.palemoon.org/faq.shtml">F.A.Q.</A>
     </DL><p>
 #include bookmarks.extra
     <HR>
