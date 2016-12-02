@@ -8,7 +8,9 @@ To build on Windows:
 * Add a file named .mozconfig with the contents: ac_add_options --enable-application=suite
 * Install the mozilla-build package from Mozilla and Visual Studio 2013 Community Edition
 * Run \mozilla-build\start-shell-msvc2013.bat to open a command prompt and go to the marine folder
-* Run ./client.py checkout to get the SeaMonkey 2.35 versions of ChatZilla and DOM Inspector
+* Run ./client.py checkout to get the SeaMonkey 2.35 versions of ChatZilla and DOM Inspector (unless you want to disable these in .mozconfig)
 * Run ./mozilla/mach build
 
 The SeaMonkey code here is based on SEAMONKEY_2_35_RELEASE_BRANCH on comm-release (it may be missing some Thunderbird changes).
+
+There is a known bug with the URL bar and associated buttons (back, forward, etc) not updating.
